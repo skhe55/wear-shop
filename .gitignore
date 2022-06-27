@@ -1,0 +1,23 @@
+# dependencies
+/client/node_modules
+/server/node_modules
+
+# debug
+/client/yarn-debug.log*
+/server/yarn-error.log*
+
+# local env files
+/client/.env*.local
+/server/.env*.local
+
+# vercel
+/client/.vercel
+/server/.vercel
+
+# typescript
+/client/*.tsbuildinfo
+/server/*.tsbuildinfo
+
+# .gitignore files in inner folders
+/client/.gitignore
+/server/.gitignore
