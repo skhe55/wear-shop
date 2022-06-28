@@ -1,10 +1,12 @@
 import React from "react";
 import { Outlet } from 'react-router-dom';
+import Header from "../components/Header";
+import Squares from "../components/Squares";
 
 const MainLayout: React.FC = () => {
     return (
         <div className="wrapper">
-            {/* <Header /> */}
+            <Header />
             <div className="content">
                 <Outlet />
             </div>

@@ -1,0 +1,53 @@
+@import './variables';
+@import './libs//normalize';
+
+@import './components/all';
+
+@keyframes backgroundColor {
+    0%   { background: #45e883; } 
+    20%  { background: #94faba; }
+    40%  { background: #9af8be; }
+    60%  { background: #79e8a3; }
+    80%  { background: #64ec98; }
+    100% { background: #45e883; }
+  }
+
+body {
+    background: #45e883;
+    animation: backgroundColor 9s infinite linear;
+}
+
+.wrapper {
+    width: calc(100vw - 100px);
+    height: 100%;
+    background-color: #fff;
+    margin: 50px auto;
+    border-radius: 10px;
+    max-width: 1400px;
+
+    @media (max-width: 645px) {
+        width: calc(100vw - 30px);
+        margin-top: 15px;
+    }
+}
+
+.content {
+    padding: 40px 0;
+
+    &__top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+.container {
+    width: $container-width;
+    margin: 0 auto;
+
+    &--cart {
+        max-width: 820px;
+        margin: 90px auto;
+    }
+}
+
