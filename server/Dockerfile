@@ -13,6 +13,7 @@ COPY yarn.lock /usr/src/app
 RUN yarn
 
 COPY . /usr/src/app
+COPY ./dist ./dist
 
 RUN yarn build
 

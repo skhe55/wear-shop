@@ -16,10 +16,14 @@ export class WearService {
         this.logger = new Logger('Wear Service');
     }
 
-    public async create(dto: CreateWearDto, image: unknown) {
+    public async create(dto: CreateWearDto, image) {
+        const {product_name, price, sizes, rating } = dto;
         const fileName = await this.fileService.createFile(image);
         const wear = await this.wearEntity.create({
-            ...dto,
+            product_name: product_name,
+            price: price,
+            sizes: sizes.slice(1, sizes.length - 1).split(',').map(Number),
+            rating: rating,
             image_url: fileName
         })
         return wear;

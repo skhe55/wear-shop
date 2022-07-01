@@ -2,20 +2,32 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import * as uuid from 'uuid';
 import * as fs from 'fs';
 import * as path from 'path';
+import { CreateImgDto } from "./dto/create-img.dto";
 
 @Injectable()
 export class FilesService {
-    async createFile(file): Promise<string> {
+    static allowTypes = [
+        'image/jpeg',
+        'image/png'
+    ]
+
+    async createFile(file: CreateImgDto): Promise<string> {
         try {
-            const fileName = uuid.v4() + '.jpg';
+            const {buffer, originalname, mimetype} = file;
+            if(!FilesService.isAllowFileType(mimetype)) {
+                throw new HttpException('Не разрешённый разрешение файла', HttpStatus.BAD_GATEWAY);
+            }
+            const extension = `.${originalname.split('.')[1].toLowerCase()}`;
+            const fileName = uuid.v4() + extension;
             const filePath = path.resolve(__dirname, '..', 'static')
             if(this.checkFileExists(filePath)) {
                 this.makeDirectory(filePath);
             }
-            this.writeFile(path.join(filePath, fileName), file.buffer);
+            this.writeFile(path.join(filePath, fileName), buffer);
             return fileName;
             
         } catch(error) {
+            console.log(error);
             throw new HttpException(`Произошла ошибка при записи файла`, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -43,5 +55,14 @@ export class FilesService {
                 else resolve(data);
             })
         })
+    }
+
+    static isAllowFileType(type: string) {
+        for(const allowType of FilesService.allowTypes) {
+            if(type === allowType) {
+                return true;
+            }
+        }
+        return false;
     }
 }
