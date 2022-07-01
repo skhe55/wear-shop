@@ -1,0 +1,1 @@
+export const WEAR_REPOSITORY = 'WEAR_REPOSITORY';

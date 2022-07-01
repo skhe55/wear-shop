@@ -1,0 +1,30 @@
+version: '3.0'
+
+services:
+  contractor: 
+    container_name: wear_api
+    build: .
+    ports: 
+      - "6789:6789"
+    env_file:
+      - .gen.env
+    depends_on:
+      - wear_db
+    restart: always
+
+  wear_db:
+    container_name: wear_db
+    image: postgres:14-alpine
+    restart: always
+    env_file:
+      - .wear_db.env
+    ports: 
+      - '12002:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+
+volumes:
+  logvolume: {}
+  public:
+  pgdata:
