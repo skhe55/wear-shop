@@ -14,6 +14,7 @@ import { WearModule } from './wear/wear.module';
       isGlobal: true
     }),
     ServeStaticModule.forRoot({
+      serveRoot: "/static",
       rootPath: path.resolve(__dirname, 'static'),
     }),
     DatabaseModule,
