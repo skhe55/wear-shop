@@ -8,6 +8,14 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+
+        @media (max-width: 768px) {
+            display: grid;
+            grid-template-rows: repeat(3, 1fr);
+            justify-content: center;
+            justify-items: center;
+            gap: 12px;
+        }
     }
 
     &__logo {

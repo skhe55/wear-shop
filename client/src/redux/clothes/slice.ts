@@ -1,17 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { fetchClotches } from "./asyncActions";
-import { Clothes } from './types';
+import { Clothes, Status } from './types';
 
 interface ClothesSliceState {
-    clothes: Clothes[];
-    status: string;
+    items: Clothes[];
+    status: Status;
     error: string | null;
 };
 
 const initialState: ClothesSliceState = {
-    clothes: [],
-    status: 'loading',
+    items: [],
+    status: Status.LOADING,
     error: null,
 }
 
@@ -20,23 +20,23 @@ const clothesSlice = createSlice({
     initialState,
     reducers: {
         setClothes(state, action: PayloadAction<Clothes[]>) {
-            state.clothes = action.payload;
+            state.items = action.payload;
         },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchClotches.pending, (state, action) => {
-            state.status = 'loading';
-            state.clothes = [...state.clothes];
+            state.status = Status.LOADING;
+            state.items = [...state.items];
         });
 
         builder.addCase(fetchClotches.fulfilled, (state, action) => {
-            state.status = action.payload.status;
-            state.clothes = [...state.clothes, ...action.payload.data];
+            state.status = Status.SUCCESS;
+            state.items = [...state.items, ...action.payload.data];
         });
 
         builder.addCase(fetchClotches.rejected, (state, action) => {
-            state.status = 'not found';
-            state.clothes = [...state.clothes];
+            state.status = Status.NOT_FOUND;
+            state.items = [...state.items];
         });
     },
 });

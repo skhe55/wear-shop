@@ -1,3 +1,9 @@
+export enum Status {
+    SUCCESS = 'success',
+    NOT_FOUND = 'not found',
+    LOADING = 'loading'
+}
+
 export enum WearTypes {
     TSHIRT = 'T-shirt',
     HOODIE = 'Hoodie',

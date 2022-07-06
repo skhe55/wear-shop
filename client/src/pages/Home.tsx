@@ -3,6 +3,8 @@ import { Categories }  from '../components/Categories';
 import { useAppDispatch, useAppSelector } from '../hooks/typed-hooks';
 import { fetchClotches } from '../redux/clothes/asyncActions';
 import { setCategoryId } from '../redux/filters/slice';
+import { WearBlockProps } from '../components/WearBlock/types';
+import WearBlock from '../components/WearBlock';
 
 const Home:React.FC = () => {
     const [fetching, setFetching] = React.useState<boolean>(false);
@@ -10,7 +12,7 @@ const Home:React.FC = () => {
     const isMounted = React.useRef(false);
 
     const dispatch = useAppDispatch();
-    const { clothes, status } = useAppSelector(state => state.clothes);
+    const { items, status } = useAppSelector(state => state.clothes);
 
     const onChangeCategory = React.useCallback((id: number) => {
         dispatch(setCategoryId(id));
@@ -54,16 +56,28 @@ const Home:React.FC = () => {
         };
     }, [])
 
+    const wear = items.map((obj: WearBlockProps) => <WearBlock key={obj.id} {...obj} />);
+
     return (
         <div className='container'>
             <div className='content__top'>
                 <Categories value={0} onChangeCategory={onChangeCategory}/>
             </div>
-            {
+            {/* {
                 clothes.map(wear => 
-                    <img width={350} height={350} src={`http://localhost:3001/static/${wear.image_url}`} key={wear.id}></img>
+                    // <img width={350} height={350} src={`http://localhost:3001/static/${wear.image_url}`} key={wear.id}></img>
+                    <WearBlock 
+                        id={wear.id}
+                        product_name={wear.product_name}
+                        price={wear.price}
+                        sizes={wear.sizes}
+                        image_url={wear.image_url}
+                        wear_type={wear.wear_type}
+                        rating={wear.rating}
+                    />
                 )
-            }
+            } */}
+            <div className='content__items'>{wear}</div>
         </div>
     );
 }
