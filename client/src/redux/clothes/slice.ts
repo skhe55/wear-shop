@@ -19,9 +19,13 @@ const clothesSlice = createSlice({
     name: 'clothes',
     initialState,
     reducers: {
-        setClothes(state, action: PayloadAction<Clothes[]>) {
+        setItems(state, action: PayloadAction<Clothes[]>) {
             state.items = action.payload;
         },
+        clearItems(state) {
+            state.items = [];
+            state.status = Status.LOADING;
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(fetchClotches.pending, (state, action) => {
@@ -43,6 +47,6 @@ const clothesSlice = createSlice({
 
 export const selectClothes = (state: RootState) => state.clothes;
 
-export const { setClothes } = clothesSlice.actions;
+export const { setItems, clearItems } = clothesSlice.actions;
 
 export default clothesSlice.reducer;

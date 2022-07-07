@@ -2,7 +2,8 @@ import * as React from 'react';
 import debounce from 'lodash.debounce';
 import styles from './Search.module.scss';
 import { useAppDispatch } from '../../hooks/typed-hooks';
-import { setSearchValue } from '../../redux/filters/slice';
+import { setCurrentPage, setFetching, setSearchValue } from '../../redux/filters/slice';
+import { clearItems } from '../../redux/clothes/slice';
 
 export const Search: React.FC = () => {
     const [value, setValue] = React.useState<string>('');
@@ -18,7 +19,10 @@ export const Search: React.FC = () => {
     const updateSearchValue = React.useCallback(
         debounce((str: string) => {
             dispatch(setSearchValue(str));
-        }, 150),
+            dispatch(setCurrentPage(0));
+            dispatch(clearItems());
+            dispatch(setFetching(true));
+        }, 300),
         [],
     );
     

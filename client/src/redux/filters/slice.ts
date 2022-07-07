@@ -4,12 +4,13 @@ import { FiltersSliceState, SortPropertyEnum } from "./types";
 
 const initialState: FiltersSliceState = {
     searchValue: '',
-    categoryId: 0,
-    currentPage: 1,
+    categoryName: '',
+    currentPage: 0,
     sort: {
         name: 'популярности',
         sortProperty: SortPropertyEnum.RATING_DESC,
     },
+    fetching: false
 };
 
 const filtersSlice = createSlice({
@@ -19,14 +20,20 @@ const filtersSlice = createSlice({
         setSearchValue(state, action: PayloadAction<string>) {
             state.searchValue = action.payload;
         },
-        setCategoryId(state, action: PayloadAction<number>) {
-            state.categoryId = action.payload;
+        setCategoryName(state, action: PayloadAction<string>) {
+            state.categoryName = action.payload;
+        },
+        setCurrentPage(state, action: PayloadAction<number>) {
+            state.currentPage = action.payload;
+        },
+        setFetching(state, action: PayloadAction<boolean>) {
+            state.fetching = action.payload;
         }
     }
 })
 
 export const selectFilters = (state: RootState) => state.filters;
 
-export const { setSearchValue, setCategoryId } = filtersSlice.actions;
+export const { setSearchValue, setCategoryName, setCurrentPage, setFetching } = filtersSlice.actions;
 
 export default filtersSlice.reducer;

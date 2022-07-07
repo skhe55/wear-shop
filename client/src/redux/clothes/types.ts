@@ -4,28 +4,14 @@ export enum Status {
     LOADING = 'loading'
 }
 
-export enum WearTypes {
-    TSHIRT = 'T-shirt',
-    HOODIE = 'Hoodie',
-    PANTS = 'Pants'
-}
-
-export enum SizeTypes {
-    S = 'S',
-    M = 'M',
-    L = 'L',
-    XL = 'XL',
-    XLXL = '2XL'
-}
-
 export type Clothes = {
     id: number;
     product_name: string;
     price: number;
     image_url: string;
-    sizes: SizeTypes[];
+    sizes: string[];
     rating: number;
-    wear_type: WearTypes;
+    wear_type: string;
 }
 
 type SearchClothesParams = {

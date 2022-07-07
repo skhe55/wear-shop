@@ -1,8 +1,9 @@
 export interface FiltersSliceState {
     searchValue: string;
-    categoryId: number;
+    categoryName: string;
     currentPage: number;
     sort: Sort;
+    fetching: boolean;
 }
 
 export enum SortPropertyEnum {
@@ -16,3 +17,4 @@ export type Sort = Required<{
     name: string;
     sortProperty: SortPropertyEnum;
 }>
+
