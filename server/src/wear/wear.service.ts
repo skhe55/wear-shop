@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus, Inject, Injectable, Logger } from "@nestjs/common";
+import { Op } from "sequelize";
 import { WearEntity } from "src/database/entities/wear.entity";
 import { WEAR_REPOSITORY } from "src/database/providers/constants";
 import { FilesService } from "src/files/file.service";
@@ -146,7 +147,7 @@ export class WearService {
             
             const quantityOfWear = await this.wearEntity.count({
                 where: {
-                    ...validDto
+                    ...this.convertRequestDtoToValidFormat(validDto)
                 }
             });
             
@@ -154,7 +155,7 @@ export class WearService {
 
             const findedWear = await this.wearEntity.findAll({
                 where: {
-                    ...validDto
+                    ...this.convertRequestDtoToValidFormat(validDto)
                 },
                 order: [
                     [sortByField || 'id', sortType || 'ASC']
@@ -187,6 +188,35 @@ export class WearService {
                 quantityOfWear: null,
                 maximumPages: null
             };
+        }
+    }
+    /**
+     * Convert data to valid sequelize request format
+     * @param object 
+     * @returns 
+     */
+    private convertRequestDtoToValidFormat = (object): {} => {
+        try {
+            let validData = {};
+            for(const key in object) {
+                if(Object.hasOwnProperty.call(object, key)) {
+                    const element = object[key];
+                    if(!Array.isArray(element) && key === 'product_name') {
+                        validData = {
+                            ...validData,
+                            [key]: {
+                                [Op.iLike]: `%${element}%`
+                            }
+                        }
+                    } else if(!Array.isArray(element)) {
+                        validData = {...validData, [key]: element}
+                    }
+                }
+            }
+            return validData;
+        } catch(error) { 
+            this.logger.log(`Wear Service | convertRequestDtoToValidFormat: ${error}`);
+            return new Error('Fail convert data');
         }
     }
 }
