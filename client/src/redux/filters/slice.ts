@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-import { FiltersSliceState, SortPropertyEnum } from "./types";
+import { FiltersSliceState, Sort, SortPropertyEnum } from "./types";
 
 const initialState: FiltersSliceState = {
     searchValue: '',
     categoryName: '',
     currentPage: 0,
     sort: {
-        name: 'популярности',
+        name: 'убывающей популярности',
         sortProperty: SortPropertyEnum.RATING_DESC,
     },
     fetching: false
@@ -26,6 +26,9 @@ const filtersSlice = createSlice({
         setCurrentPage(state, action: PayloadAction<number>) {
             state.currentPage = action.payload;
         },
+        setSort(state, action: PayloadAction<Sort>) {
+            state.sort = action.payload;
+        },
         setFetching(state, action: PayloadAction<boolean>) {
             state.fetching = action.payload;
         }
@@ -34,6 +37,6 @@ const filtersSlice = createSlice({
 
 export const selectFilters = (state: RootState) => state.filters;
 
-export const { setSearchValue, setCategoryName, setCurrentPage, setFetching } = filtersSlice.actions;
+export const { setSearchValue, setCategoryName, setCurrentPage, setSort, setFetching } = filtersSlice.actions;
 
 export default filtersSlice.reducer;

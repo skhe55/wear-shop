@@ -8,6 +8,7 @@ import WearBlock from '../components/WearBlock';
 import { RequestClothesBody } from '../redux/clothes/types';
 import { deleteItemsFromObj } from '../utils/deleteUndefinedItemsFromObject';
 import { clearItems } from '../redux/clothes/slice';
+import { Sort } from '../components/Sort';
 
 const Home:React.FC = () => {
     const [fetchingPage, setFetchingPage] = React.useState<boolean>(false);
@@ -15,7 +16,7 @@ const Home:React.FC = () => {
 
     const dispatch = useAppDispatch();
     const { items, status } = useAppSelector(state => state.clothes);
-    const { searchValue, categoryName, currentPage, fetching } = useAppSelector(state => state.filters);
+    const { searchValue, categoryName, currentPage, sort, fetching } = useAppSelector(state => state.filters);
 
     const onChangeCategory = React.useCallback((name: string) => {
         dispatch(setCategoryName(name));
@@ -34,8 +35,8 @@ const Home:React.FC = () => {
         const body: RequestClothesBody = {
             wear_type: categoryName === '' ? undefined : categoryName,
             product_name: searchValue === '' ? undefined : searchValue,
-            sortByField: 'id',
-            sortType: 'ASC',
+            sortType: sort.sortProperty.split('-')[1],
+            sortByField: sort.sortProperty.split('-')[0],
             quantityOfElementsInGroup: 4,
             offsetValue: currentPage,
         };
@@ -63,7 +64,7 @@ const Home:React.FC = () => {
         if(fetching) {
             getClothes(); 
         }  
-    }, [categoryName, searchValue])
+    }, [categoryName, searchValue, sort])
 
     React.useEffect(() => {
         document.addEventListener('scroll', scrollHandler);
@@ -72,14 +73,13 @@ const Home:React.FC = () => {
         };
     }, [])
 
-
-    console.log(fetching, searchValue)
     const wear = items.map((obj: WearBlockProps) => <WearBlock key={obj.id} {...obj} />);
 
     return (
         <div className='container'>
             <div className='content__top'>
                 <Categories value={categoryName} onChangeCategory={onChangeCategory}/>
+                <Sort value={sort} />
             </div>
             <div className='content__items'>{wear}</div>
         </div>

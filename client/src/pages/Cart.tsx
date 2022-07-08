@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { CartItem } from '../components/CartBlock/CartItem';
+import { CartEmpty } from '../components/CartEmpty';
 import { useAppDispatch, useAppSelector } from '../hooks/typed-hooks';
 import CartIcon from '../icons/CartIcon';
 import TrashIcon from '../icons/TrashIcon';
@@ -19,9 +20,9 @@ const Cart: React.FC = () => {
         }
     };
 
-    // if(!total_price) {
-    //     return <></>
-    // }
+    if(!total_price) {
+        return <CartEmpty />;
+    }
 
     return (
         <div className='container container--cart'>
