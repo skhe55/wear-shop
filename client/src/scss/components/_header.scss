@@ -3,13 +3,13 @@
 .header {
     border-bottom: 1px solid $gray-line;
     padding: 40px 0;
-    
+
     .container {
         display: flex;
         align-items: center;
         justify-content: space-between;
 
-        @media (max-width: 768px) {
+        @media (max-width: 800px) {
             display: grid;
             grid-template-rows: repeat(3, 1fr);
             justify-content: center;
