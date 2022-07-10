@@ -3,6 +3,7 @@ import {Routes, Route} from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
 import Cart from './pages/Cart';
 import Home from './pages/Home';
+import FullWear from './pages/FullWear';
 import './scss/app.scss';
 
 function App() {
@@ -14,6 +15,12 @@ function App() {
           path='cart'
           element={
             <Cart />
+          }
+        />
+        <Route
+          path='wear/:id'
+          element={
+            <FullWear />
           }
         />
       </Route>

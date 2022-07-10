@@ -3,7 +3,7 @@ import { Categories }  from '../components/Categories';
 import { useAppDispatch, useAppSelector } from '../hooks/typed-hooks';
 import { fetchClotches } from '../redux/clothes/asyncActions';
 import { setCategoryName, setCurrentPage, setFetching } from '../redux/filters/slice';
-import { WearBlockProps } from '../components/WearBlock/types';
+import { WearBlockProps } from '../components/WearBlock/index';
 import WearBlock from '../components/WearBlock';
 import { RequestClothesBody } from '../redux/clothes/types';
 import { deleteItemsFromObj } from '../utils/deleteUndefinedItemsFromObject';
