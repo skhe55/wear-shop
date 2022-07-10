@@ -191,6 +191,27 @@ export class WearService {
         }
     }
     /**
+     * Get wear by id
+     * @param id 
+     * @returns {Promise<WearEntity | HttpException>}
+     */
+    public async getWearById(id:number): Promise<WearEntity | HttpException> {
+        try {   
+            if(!id || isNaN(id)) {
+                return new HttpException('id must be integer', HttpStatus.BAD_REQUEST);
+            }
+            const wear = this.wearEntity.findOne({
+                where: {
+                    id
+                }
+            })
+            return wear;
+        } catch(error) {
+            this.logger.error(error);
+            return new HttpException('error', HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    /**
      * Convert data to valid sequelize request format
      * @param object 
      * @returns 

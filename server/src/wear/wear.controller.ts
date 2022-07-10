@@ -26,7 +26,7 @@ export class WearController {
     }
 
     @ApiOperation({summary: "Удалить карточку одежды."})
-    @Delete(":id")
+    @Delete("/delete-wear/:id")
     async deleteWear(@Param('id') id:string) {
         return await this.wearService.delete(Number(id));
     }
@@ -41,5 +41,11 @@ export class WearController {
     @Post("/filter-wear")
     async getWearByFilter(@Body() dto: FindWearDto) {
         return await this.wearService.getWearByFilter(dto);
+    }
+
+    @ApiOperation({summary: "Получить карточку с одеждой по айди"})
+    @Get("/:id")
+    async getWearById(@Param('id') id:string) {
+        return await this.wearService.getWearById(Number(id));
     }
 }
