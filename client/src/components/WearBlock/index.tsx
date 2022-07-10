@@ -4,7 +4,16 @@ import { useAppDispatch, useAppSelector } from '../../hooks/typed-hooks';
 import PlusIcon from '../../icons/PlusIcon';
 import { plusItem } from '../../redux/cart/slice';
 import { CartItem } from '../../redux/cart/types';
-import { WearBlockProps } from './types';
+
+export type WearBlockProps = {
+  id: number;
+  product_name: string;
+  price: number;
+  image_url: string;
+  sizes: string[];
+  rating: number;
+  wear_type: string;
+}
 
 const WearBlock: React.FC<WearBlockProps> = ({
     id,
@@ -23,15 +32,23 @@ const WearBlock: React.FC<WearBlockProps> = ({
     const addedCount = cartItem ? cartItem.count : 0;
 
     const onClickAddToCart = () => {
+      let prev_size:string = '';
+      let _sizes:string[] = [];
+      if(cartItem) {
+        prev_size = cartItem.sizes[0];
+        if(prev_size !== sizes[activeSize]) {
+          _sizes = [prev_size, sizes[activeSize]];
+        }
+      }
       const item: CartItem = {
         id,
         product_name,
         price,
         rating,
         wear_type,
-        sizes: [sizes[activeSize]],
+        sizes: _sizes.length !== 0 ? [..._sizes] : [sizes[activeSize]],
         image_url,
-        count: 0,
+        count: cartItem?.count === undefined ? 1 : cartItem.count + 1,
       }
       dispatch(plusItem(item));
     }

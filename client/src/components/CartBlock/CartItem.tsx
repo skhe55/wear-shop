@@ -2,9 +2,17 @@ import React from "react";
 import { useAppDispatch } from "../../hooks/typed-hooks";
 import { minusItem, plusItem, removeItem } from "../../redux/cart/slice";
 import { CartItem as CartItemType } from "../../redux/cart/types";
-import { CartBlockProps } from "./types";
 
-
+export type CartBlockProps = {
+    id: number;
+    product_name: string;
+    price: number;
+    image_url: string;
+    sizes: string[];
+    rating: number;
+    wear_type: string;
+    count: number;
+}
 
 export const CartItem: React.FC<CartBlockProps> = ({
     id,
@@ -22,6 +30,13 @@ export const CartItem: React.FC<CartBlockProps> = ({
         dispatch(
             plusItem({
                 id, 
+                product_name,
+                price,
+                image_url,
+                sizes,
+                rating,
+                wear_type,
+                count: count + 1
             } as CartItemType),
         );
     };
@@ -52,7 +67,7 @@ export const CartItem: React.FC<CartBlockProps> = ({
             <div className="cart__item-info">
                 <h3>{product_name}</h3>
                 <p>
-                    {wear_type}, {sizes}
+                    {wear_type}, {sizes.join(', ')}
                 </p>
             </div>
             <div className="cart__item-count">
