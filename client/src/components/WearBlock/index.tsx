@@ -85,4 +85,4 @@ const WearBlock: React.FC<WearBlockProps> = ({
     );
 }
 
-export default WearBlock;
+export default React.memo(WearBlock);
