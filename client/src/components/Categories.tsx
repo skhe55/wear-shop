@@ -6,7 +6,7 @@ type CategoriesProps = {
 }
 
 export const Categories: React.FC<CategoriesProps> = React.memo(({ value, onChangeCategory }) => {
-    const categories = [
+    const categories = React.useMemo(() => [
         {
             name: 'Все',
             translitName: ''
@@ -23,7 +23,7 @@ export const Categories: React.FC<CategoriesProps> = React.memo(({ value, onChan
             name: 'Футболки',
             translitName: 'T-shirt'
         }
-    ];
+    ], []);
 
     return (
         <div className='categories'>
