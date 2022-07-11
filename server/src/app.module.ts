@@ -5,6 +5,8 @@ import * as path from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
+import { RolesModule } from './roles/roles.module';
+import { UsersModule } from './users/users.module';
 import { WearModule } from './wear/wear.module';
 
 @Module({
@@ -18,7 +20,9 @@ import { WearModule } from './wear/wear.module';
       rootPath: path.resolve(__dirname, 'static'),
     }),
     DatabaseModule,
-    WearModule
+    WearModule,
+    RolesModule,
+    UsersModule
   ],
   controllers: [AppController],
   providers: [AppService],

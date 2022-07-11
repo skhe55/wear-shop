@@ -1,4 +1,7 @@
 import { Sequelize } from "sequelize-typescript"
+import { RoleEntity } from "./entities/roles.entity";
+import { UserRoles } from "./entities/user-roles.entity";
+import { UserEntity } from "./entities/users.entity";
 import { WearEntity } from "./entities/wear.entity";
 
 
@@ -15,7 +18,7 @@ export const DatabaseProviders = [
                 database: process.env.POSTGRES_DB,
                 logging: false
             });
-            sequelize.addModels([WearEntity])
+            sequelize.addModels([WearEntity, RoleEntity, UserEntity, UserRoles])
             await sequelize.sync();
             return sequelize;
         }
