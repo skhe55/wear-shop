@@ -2,6 +2,7 @@ import React from "react";
 import { useAppDispatch } from "../../hooks/typed-hooks";
 import { minusItem, plusItem, removeItem } from "../../redux/cart/slice";
 import { CartItem as CartItemType } from "../../redux/cart/types";
+import { Modal } from "../Modal";
 
 export type CartBlockProps = {
     id: number;
@@ -14,7 +15,7 @@ export type CartBlockProps = {
     count: number;
 }
 
-export const CartItem: React.FC<CartBlockProps> = ({
+const CartItem: React.FC<CartBlockProps> = ({
     id,
     product_name,
     price,
@@ -25,6 +26,8 @@ export const CartItem: React.FC<CartBlockProps> = ({
     count
 }) => {
     const dispatch = useAppDispatch();
+    const [activeModal, setActiveModal] = React.useState<boolean>(false);
+    const [confirm, setConfirm] = React.useState<boolean>(false);
 
     const onClickPlus = () => {
         dispatch(
@@ -50,17 +53,33 @@ export const CartItem: React.FC<CartBlockProps> = ({
     }
 
     const onClickRemove = () => {
-        if(window.confirm('Вы хотите удалить товар?')) {
+        setActiveModal(true);
+    }
+    
+    React.useEffect(() => {
+        if(confirm) {
             dispatch(
                 removeItem({
                     id,
                 } as CartItemType),
             );
         }
-    }
-    
+    }, [confirm])
+
     return (
         <div className="cart__item">
+            <Modal
+                active={activeModal}
+                setActive={setActiveModal}
+            >
+                <div className='modal'>
+                    <h3>Вы действительно хотите удалить вещь из корзины?</h3>
+                    <div className='modal--buttons'>
+                        <button onClick={() => setConfirm(true)}>Да</button>
+                        <button onClick={() => setActiveModal(false)}>Нет</button> 
+                    </div>
+                </div>
+            </Modal>
             <div className="cart__item-img">
                 <img className="wear-block__image" src={`${process.env.REACT_APP_SERVER_STATIC_DIST}/${image_url}`} alt="wear" />
             </div>
@@ -133,3 +152,5 @@ export const CartItem: React.FC<CartBlockProps> = ({
         </div>
     );
 }
+
+export default React.memo(CartItem);

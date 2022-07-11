@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { CartItem } from '../components/CartBlock/CartItem';
+import  CartItem  from '../components/CartBlock/CartItem';
 import { CartEmpty } from '../components/CartEmpty';
+import { Modal } from '../components/Modal';
 import { useAppDispatch, useAppSelector } from '../hooks/typed-hooks';
 import CartIcon from '../icons/CartIcon';
 import TrashIcon from '../icons/TrashIcon';
@@ -9,16 +10,23 @@ import { clearItems } from '../redux/cart/slice';
 import { CartItem as CartItemType } from '../redux/cart/types';
 
 const Cart: React.FC = () => {
+    const [activeModal, setActiveModal] = React.useState<boolean>(false);
+    const [confirm, setConfirm] = React.useState<boolean>(false);
+
     const dispatch = useAppDispatch();
     const { total_price, items } = useAppSelector(state => state.cart);
 
     const total_count = items.reduce((sum: number, item: CartItemType) => sum + item.count, 0);
 
     const onClickClear = () => {
-        if(window.confirm('Очистить корзину?')) {
+        setActiveModal(true);
+    };
+
+    React.useEffect(() => {
+        if(confirm) {
             dispatch(clearItems());
         }
-    };
+    }, [confirm])
 
     if(!total_price) {
         return <CartEmpty />;
@@ -26,6 +34,18 @@ const Cart: React.FC = () => {
 
     return (
         <div className='container container--cart'>
+            <Modal 
+                active={activeModal}
+                setActive={setActiveModal}
+            >
+            <div className='modal'>
+                <h3>Вы действительно хотите очистить корзину?</h3>
+                <div className='modal--buttons'>
+                    <button onClick={() => setConfirm(true)}>Да</button>
+                    <button onClick={() => setActiveModal(false)}>Нет</button> 
+                </div>
+            </div>
+            </Modal>
             <div className='cart'>
                 <div className="cart__top">
                     <h2 className="content__title">
