@@ -29,7 +29,7 @@ export class UsersService {
             });
             const role = await this.roleService.getRoleByName("user");
             await user.$set('roles', [role.id])
-            user.roles[role];
+            user.roles = [role];
             return user;
         } catch(error) {
             this.logger.log(`createUser: ${error}`);
