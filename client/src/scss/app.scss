@@ -73,6 +73,11 @@ body {
     width: $container-width;
     margin: 0 auto;
 
+    &--not-found {
+        display: flex;
+        justify-content: center;
+    }
+
     &--cart {
         max-width: 820px;
         margin: 90px auto;

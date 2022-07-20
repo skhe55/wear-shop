@@ -9,12 +9,22 @@
         align-items: center;
         justify-content: space-between;
 
-        @media (max-width: 800px) {
+        @media (max-width: 1000px) {
+            gap: 12px;
+        }
+
+        @media (max-width: 810px) {
             display: grid;
             grid-template-rows: repeat(3, 1fr);
             justify-content: center;
             justify-items: center;
             gap: 12px;
+        }
+
+        .another-page-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
     }
 

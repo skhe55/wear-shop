@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logoSvg from '../assets/img/logo.svg';
+import authSvg from '../assets/img/auth.svg';
 import { useAppSelector } from '../hooks/typed-hooks';
 import CartIcon from '../icons/CartIcon';
 import { Search } from './Search';
@@ -33,15 +34,22 @@ const Header: React.FC = () => {
                     </div>
                 </Link>
                 {location.pathname !== '/cart' && <Search />}
-                <div className='header__cart'>
-                    {location.pathname !== '/cart' && (
-                        <Link to='/cart' className='button button--cart'>
-                            <span>{total_price} ₽</span>
-                            <div className='button__delimiter'></div>
-                            <CartIcon />
-                            <span>{total_count}</span>
-                        </Link>
-                    )}
+                <div className='another-page-wrapper'>
+                    <div className='header__cart'>
+                        {location.pathname !== '/cart' && (
+                            <Link to='/cart' className='button button--cart'>
+                                <span>{total_price} ₽</span>
+                                <div className='button__delimiter'></div>
+                                <CartIcon />
+                                <span>{total_count}</span>
+                            </Link>
+                        )}
+                    </div>
+                    <Link to="auth">
+                        <div className='header__auth'>
+                            <img width={30} src={authSvg} alt='Auth logo' />
+                        </div>
+                    </Link>
                 </div>
             </div>
         </div>
