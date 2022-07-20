@@ -2,8 +2,10 @@ import * as React from 'react';
 
 const NotFound:React.FC = () => {
     return (
-        <div>
-            404 Error
+        <div className='container'>
+            <div className='container--not-found'>
+                <h2>Страницы не существует.</h2>
+            </div>
         </div>
     );
 }
