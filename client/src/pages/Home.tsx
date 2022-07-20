@@ -9,6 +9,7 @@ import { RequestClothesBody } from '../redux/clothes/types';
 import { deleteItemsFromObj } from '../utils/deleteUndefinedItemsFromObject';
 import { clearItems } from '../redux/clothes/slice';
 import { Sort } from '../components/Sort';
+import SceletonWearBlock from '../components/WearBlock/sceleton';
 
 const Home:React.FC = () => {
     const [fetchingPage, setFetchingPage] = React.useState<boolean>(false);
@@ -74,6 +75,7 @@ const Home:React.FC = () => {
     }, [])
 
     const wear = items.map((obj: WearBlockProps) => <WearBlock key={obj.id} {...obj} />);
+    const sceletons = [...new Array(6)].map((_, index) => <SceletonWearBlock key={index} />);
 
     return (
         <div className='container'>
@@ -81,7 +83,7 @@ const Home:React.FC = () => {
                 <Categories value={categoryName} onChangeCategory={onChangeCategory}/>
                 <Sort value={sort} />
             </div>
-            <div className='content__items'>{wear}</div>
+            <div className='content__items'>{status === 'loading' ? sceletons : wear}</div>
         </div>
     );
 }
