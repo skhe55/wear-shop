@@ -1,10 +1,16 @@
 import React, { Suspense } from 'react';
 import {Routes, Route} from 'react-router-dom';
 import MainLayout from './layouts/MainLayout';
-import Cart from './pages/Cart';
 import Home from './pages/Home';
-import FullWear from './pages/FullWear';
 import './scss/app.scss';
+
+/**
+ * Code splitting on chunks
+ */
+const FullWear = React.lazy(() => import('./pages/FullWear'));
+const Cart = React.lazy(() => import('./pages/Cart'));
+const NotFound = React.lazy(() => import('./pages/NotFound'));
+const LoginPage = React.lazy(() => import('./pages/auth/Login'));
 
 function App() {
   return (
@@ -14,13 +20,33 @@ function App() {
         <Route 
           path='cart'
           element={
-            <Cart />
+            <Suspense fallback={<div>Загрузка...</div>}>
+              <Cart />
+            </Suspense>
           }
         />
         <Route
           path='wear/:id'
           element={
-            <FullWear />
+            <Suspense fallback={<div>Загрузка...</div>}>
+              <FullWear />
+            </Suspense>
+          }
+        />
+        <Route 
+          path='auth'
+          element={
+            <Suspense fallback={<div>Загрузка...</div>}>
+              <LoginPage />
+            </Suspense>
+          }
+        />
+        <Route 
+          path='*'
+          element={
+            <Suspense fallback={<div>Загрузка...</div>}>
+              <NotFound />
+            </Suspense>
           }
         />
       </Route>
