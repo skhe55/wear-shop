@@ -1,6 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { ApiOperation } from "@nestjs/swagger";
+import { Roles } from "src/auth/roles-auth.decorator";
+import { RolesGuard } from "src/auth/roles.guard";
 import { CreateImgDto } from "./dto/create-img.dto";
 import { CreateWearDto } from "./dto/create-wear.dto";
 import { FindWearDto } from "./dto/find-wear.dto";
@@ -12,6 +14,8 @@ export class WearController {
     constructor(private wearService: WearService) {}
     
     @ApiOperation({summary: "Создать новую карточку одежды с картинкой."})
+    @Roles("admin")
+    @UseGuards(RolesGuard)
     @Post("/create-wear")
     @UseInterceptors(FileInterceptor('image'))
     async createWear(@Body() dto: CreateWearDto, @UploadedFile() image: CreateImgDto) {
@@ -19,6 +23,8 @@ export class WearController {
     }
 
     @ApiOperation({summary: "Обновить карточку одежды с картинкой."})
+    @Roles("admin")
+    @UseGuards(RolesGuard)
     @Put("/update-wear")
     @UseInterceptors(FileInterceptor('image'))
     async updateWear(@Body() dto: UpdateWearDto, @UploadedFile() image: CreateImgDto) {
@@ -26,6 +32,8 @@ export class WearController {
     }
 
     @ApiOperation({summary: "Удалить карточку одежды."})
+    @Roles("admin")
+    @UseGuards(RolesGuard)
     @Delete("/delete-wear/:id")
     async deleteWear(@Param('id') id:string) {
         return await this.wearService.delete(Number(id));
