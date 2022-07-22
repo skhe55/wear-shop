@@ -3,12 +3,14 @@ import { ThunkAction } from 'redux-thunk';
 import clothesReducer from './clothes/slice';
 import filtersReducer from './filters/slice';
 import cartReducer from './cart/slice';
+import authReducer from './auth/slice';
 
 const store = configureStore({
     reducer: {
         clothes: clothesReducer,
         filters: filtersReducer,
         cart: cartReducer,
+        auth: authReducer
     },
 });
 
