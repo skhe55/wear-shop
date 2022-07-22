@@ -1,5 +1,52 @@
+%input-shared {
+    padding: 14px 20px;
+    font-size: 20px;
+    border-radius: 12px;
+    border-color: black;
+
+    &:disabled {
+        background-color: rgba(0, 0, 0, 0.25);
+    }
+}
+
 .container {
     display: flex;
-    max-width: 160px;
+    max-width: 300px;
     max-height: 60px;
+
+    .input--not-empty {
+        @extend %input-shared;
+
+        &:valid ~ span, &:focus ~ span {
+            transform: translateX(100px) translateY(-5px);
+            font-size: 12px;
+            padding: 0 10px;
+            text-transform: uppercase;
+            background: white;
+            border-left: 1px solid black;
+            border-right: 1px solid black;
+        }
+    }
+
+    .input--empty {
+        @extend %input-shared;
+
+        &:focus ~ span {
+            transform: translateX(100px) translateY(-5px);
+            font-size: 12px;
+            padding: 0 10px;
+            text-transform: uppercase;
+            background: white;
+            border-left: 1px solid black;
+            border-right: 1px solid black;
+        }
+    }
+
+    span {
+        position: absolute;
+        padding: 14px 20px;
+        pointer-events: none;
+        font-size: 20px;
+        transition: 0.5s;
+    }
 }

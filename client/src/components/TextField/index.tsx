@@ -5,7 +5,7 @@ type TextFieldProps = {
     holder: string;
     isDisabled: boolean;
     value: string;
-    changeValue: (value: string) => void;
+    changeValue: (value: React.ChangeEvent<HTMLInputElement>) => void;
     type: string;
 }
 
@@ -15,10 +15,11 @@ const TextField:React.FC<TextFieldProps> = ({holder, isDisabled, value, changeVa
             <input 
                 type={type}
                 disabled={isDisabled}
-                placeholder={holder}
                 value={value}
-                onInput={(event: React.ChangeEvent<HTMLInputElement>) => changeValue(event.target.value)}
+                onInput={changeValue}
+                className={value !== '' ? styles['input--not-empty'] : styles['input--empty']}
             />
+            <span>{holder}</span>
         </div>
     );  
 }
