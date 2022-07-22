@@ -33,7 +33,7 @@ const Header: React.FC = () => {
                         </div>
                     </div>
                 </Link>
-                {location.pathname !== '/cart' && <Search />}
+                {location.pathname !== '/cart' && location.pathname !== '/auth' && <Search />}
                 <div className='another-page-wrapper'>
                     <div className='header__cart'>
                         {location.pathname !== '/cart' && (
@@ -47,7 +47,7 @@ const Header: React.FC = () => {
                     </div>
                     <Link to="auth">
                         <div className='header__auth'>
-                            <img width={30} src={authSvg} alt='Auth logo' />
+                            <img width={50} height={50} src={authSvg} alt='Auth logo' />
                         </div>
                     </Link>
                 </div>
