@@ -3,7 +3,7 @@ import TextField from "../../components/TextField";
 import { useAppDispatch, useAppSelector } from "../../hooks/typed-hooks";
 import { signin, registration } from "../../redux/auth/asyncActions";
 import { RequestBodyLogin } from "../../redux/auth/types";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Modal } from "../../components/Modal";
 
 const Login: React.FC = () => {
@@ -18,6 +18,8 @@ const Login: React.FC = () => {
 
     const dispatch = useAppDispatch();
 
+    const { notification, isAuth } = useAppSelector(state => state.auth);
+
     const onChangeLogin = (event: React.ChangeEvent<HTMLInputElement>) => {
         setLogin(event.target.value);
     };
@@ -28,12 +30,18 @@ const Login: React.FC = () => {
 
     const onClickLogin = () => {
         getAuthToken();
-        setActiveModal(true);
+        setTimeout(() => {
+            setActiveModal(true);
+        }, 500);
     }
 
     const onClickExitModal = () => {
         setActiveModal(false);
-        navigate('/');
+        if(isAuth) {
+            setTimeout(() => {
+                navigate('/'); 
+            }, 1000)
+        }       
     }
 
     const getAuthToken = () => {
@@ -52,7 +60,7 @@ const Login: React.FC = () => {
                 setActive={setActiveModal}
             >
             <div className='modal'>
-                <h3>Вы успешно вошли в аккаунт!</h3>
+                <h3>{notification}</h3>
                 <div className='modal--buttons'>
                     <button onClick={onClickExitModal}>Закрыть окно</button>
                 </div>
@@ -75,10 +83,10 @@ const Login: React.FC = () => {
                         type={'text'}
                     />
                     <div className="auth--buttons">
-                        <button className="button button --outline" onClick={onClickLogin}>
+                        <button className="button" onClick={onClickLogin}>
                             <span>Войти</span>
                         </button>
-                        <input className="button button --outline" value={'Зарегистрироваться'} type={'button'} disabled={true}/>
+                        <input className="button" value={'Зарегистрироваться'} type={'button'} disabled={true}/>
                     </div>
                 </div>
             </div>

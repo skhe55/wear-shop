@@ -6,12 +6,14 @@ interface AuthSliceState {
     token: string;
     isAuth: boolean;
     role: string;
+    notification: string;
 }
 
 const initialState: AuthSliceState = {
     token: '',
     isAuth: false,
-    role: ''
+    role: '',
+    notification: ''
 }
 
 const authSlice = createSlice({
@@ -33,15 +35,18 @@ const authSlice = createSlice({
             state.token = state.token;
             state.isAuth = state.isAuth;
             state.role = state.role;
+            state.notification = '';
         }),
         builder.addCase(signin.fulfilled, (state, action) => {
             state.token = action.payload.token;
             state.isAuth = true;
+            state.notification = 'Вы успешно зашли в аккаунт!';
         }),
         builder.addCase(signin.rejected, (state, aciton) => {
             state.token = '';
             state.role = '';
             state.isAuth = false;
+            state.notification = 'Что-то пошло не так, вам не удалось зайти :(';
         }),
         builder.addCase(registration.pending, (state, action) => {
             state.token = state.token;

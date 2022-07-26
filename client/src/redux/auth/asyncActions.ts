@@ -9,6 +9,10 @@ export const signin = createAsyncThunk<ResponseBodyLogin, RequestBodyLogin>(
             ...body
         });
 
+        if(!data) {
+            throw new Error();
+        }
+
         return data;
     }
 )
@@ -19,6 +23,10 @@ export const registration = createAsyncThunk<ResponseBodyRegistration, RequestBo
         const {data} = await axios.post<ResponseBodyRegistration>(`${process.env.REACT_APP_SERVER_BASE_URL}/auth/registration`, {
             ...body
         });
+
+        if(!data) {
+            throw new Error();
+        }
 
         return data;
     }
