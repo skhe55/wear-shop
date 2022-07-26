@@ -1,13 +1,13 @@
 import { HttpException, HttpStatus, Inject, Injectable, Logger } from "@nestjs/common";
-import { UserEntity } from "src/database/entities/users.entity";
-import { USERS_REPOSITORY } from "src/database/providers/constants";
-import { RolesService } from "src/roles/roles.service";
+import { UserEntity } from "../database/entities/users.entity";
+import { USERS_REPOSITORY } from "../database/providers/constants";
+import { RolesService } from "../roles/roles.service";
 import { AddRoleDto } from "./dto/add-role.dto";
 import { CreateUserDto } from "./dto/create-user.dto";
 
 @Injectable()
 export class UsersService {
-    private logger: Logger;
+    private logger: Logger; 
 
     constructor(
         @Inject(USERS_REPOSITORY)
@@ -28,7 +28,7 @@ export class UsersService {
                 password: dto.password
             });
             const role = await this.roleService.getRoleByName("user");
-            await user.$set('roles', [role.id])
+            await user.$set('roles', [role?.id])
             user.roles = [role];
             return user;
         } catch(error) {
