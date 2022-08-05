@@ -1,5 +1,9 @@
 # Online clothing store mockup
 
+
+https://user-images.githubusercontent.com/72722478/183127136-93a5f5e9-47e9-4fd1-b53d-3ced5d95ab97.mp4
+
+
 # Description 
 
 > This is small project that i did while studying front-end technologies. So far, this is only a store layout without a payment system and an admin panel, but almost all the necessary endpoints for creating/editing/deleting new products are available if the user has a valid jwt token and his role is admin.
@@ -24,3 +28,7 @@
 - Create wear_db.env file, with constants for connection to database, then enter the following command: *docker-compose up --build -d*
 - Move to client folder, then => 
 - Enter the follwing command: *yarn && yarn start*
+
+
+
+
