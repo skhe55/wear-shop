@@ -23,7 +23,7 @@ https://user-images.githubusercontent.com/72722478/183127136-93a5f5e9-47e9-4fd1-
 
 # Deploying
 
-> **distribution static files, implemented using express multiter, all static files will be stored in the dist folder, not completed description of endpoints available on http://localhost:3001/swagger-doc**
+> **distribution static files, implemented using express multer, all static files will be stored in the dist folder, not completed description of endpoints available on http://localhost:3001/swagger-doc**
 - Move to server folder, then =>
 - Create wear_db.env file, with constants for connection to database, then enter the following command: *docker-compose up --build -d*
 - Move to client folder, then => 
