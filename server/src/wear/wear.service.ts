@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus, Inject, Injectable, Logger } from "@nestjs/common";
+import sequelize, { Sequelize } from "sequelize";
 import { Op } from "sequelize";
 import { WearEntity } from "src/database/entities/wear.entity";
 import { WEAR_REPOSITORY } from "src/database/providers/constants";
@@ -144,7 +145,6 @@ export class WearService {
         try {
             const { sortType, sortByField, quantityOfElementsInGroup, offsetValue } = dto;
             const validDto = this.objectService.overloadWithoutFields(['sortType', 'sortByField', 'quantityOfElementsInGroup', 'offsetValue'], dto);
-            
             const quantityOfWear = await this.wearEntity.count({
                 where: {
                     ...this.convertRequestDtoToValidFormat(validDto)
@@ -154,6 +154,15 @@ export class WearService {
             const maximumPages = Math.ceil(quantityOfWear / quantityOfElementsInGroup);
 
             const findedWear = await this.wearEntity.findAll({
+                attributes: [
+                    [Sequelize.fn('DISTINCT', Sequelize.col('id')), 'id'],
+                    'product_name',
+                    'price',
+                    'image_url',
+                    'sizes',
+                    'rating',
+                    'wear_type'
+                ],
                 where: {
                     ...this.convertRequestDtoToValidFormat(validDto)
                 },
@@ -161,8 +170,7 @@ export class WearService {
                     [sortByField || 'id', sortType || 'ASC']
                 ],
                 limit: quantityOfElementsInGroup,
-                offset: offsetValue,
-                raw: true
+                offset: offsetValue
             });
 
             if(findedWear.length === 0) {
