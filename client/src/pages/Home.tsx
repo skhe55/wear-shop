@@ -38,11 +38,11 @@ const Home:React.FC = () => {
             product_name: searchValue === '' ? undefined : searchValue,
             sortType: sort.sortProperty.split('-')[1],
             sortByField: sort.sortProperty.split('-')[0],
-            quantityOfElementsInGroup: 4,
+            quantityOfElementsInGroup: 6,
             offsetValue: currentPage,
         };
         deleteItemsFromObj(body);
-        dispatch(setCurrentPage(currentPage + 4));
+        dispatch(setCurrentPage(currentPage + 6));
         dispatch(fetchClotches(body));
         setFetchingPage(false);
         setFetching(false);
@@ -83,7 +83,7 @@ const Home:React.FC = () => {
                 <Categories value={categoryName} onChangeCategory={onChangeCategory}/>
                 <Sort value={sort} />
             </div>
-            <div className='content__items'>{status === 'loading' ? sceletons : wear}</div>
+            <div className='content__items'>{wear}</div>
         </div>
     );
 }
